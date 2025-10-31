@@ -1,0 +1,27 @@
+# Varengold Data Analyst Case Study
+
+Dieses Projekt enthält das dbt-Modell transactions_euro_daily, 
+das alle Transaktionen in EUR je Kund:in, Konto, Datum und Währung aggregiert.
+
+## Ziel
+Darstellung der täglichen Transaktionssummen in Euro, um die Performance pro Branch und Kunde im Reporting zu analysieren.
+
+--> Marts: `marts.transactions_euro_daily`
+--> Basis für Reporting: `reporting.transactions_euro_daily`
+
+## Tech
+- dbt (Postgres)
+- Power BI (Reporting)
+- Docker Devcontainer für reproduzierbare Umgebung
+(- DBeaver für SQL und Testing)
+
+## Modelllogik
+- Join auf FX-Raten vom 01.03.2023  (Achtung: keine weiteren Daten vorhanden)
+- Umrechnung: `amount_euro = amount / fx_rate_to_euro`  
+- Aggregation: Summe und Count pro Tag, Kunde, Konto, Transaktionstyp und Währung
+
+## Datenqualität
+- Alle Spalten mit `not_null` getestet
+- nur gültige Kunden und Konten erlaubt
+- nur FX-Raten aus der Mappingtabelle
+
