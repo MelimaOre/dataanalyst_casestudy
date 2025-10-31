@@ -1,0 +1,65 @@
+
+version: 2
+
+models:
+  - name: transactions_euro_daily
+    description: "Contains the transaction amount per customer per day. The customer can make several transactions depending on their accounts and transaction types. amount_euro is in EUR and amount_original is the original currency."
+    columns:
+      - name: date
+        data_type: date
+        tests:
+          - not_null
+
+      - name: customer_id
+        data_type: integer
+        tests:
+          - not_null
+
+      - name: account_id
+        data_type: integer
+        tests:
+          - not_null
+
+      - name: account_type
+        data_type: varchar
+        tests:
+          - not_null
+
+      - name: transaction_type
+        data_type: varchar
+        tests:
+          - not_null
+
+      - name: transaction_currency
+        data_type: varchar
+        tests:
+          - not_null
+
+      - name: amount_original
+        data_type: numeric
+        tests:
+          - not_null
+
+      - name: amount_euro
+        data_type: numeric
+        tests:
+          - not_null
+
+      - name: transaction_nr
+        data_type: integer
+        tests:
+          - not_null
+
+    tests:
+      - unique:
+          column_name: "(date || '-' || customer_id || '-' || account_id || '-' || transaction_type || '-' || transaction_currency)"
+      - relationships:
+          name: account_in_accounts
+          to: ref('stg_raw_staging__accounts')
+          field: account_id
+          column_name: account_id
+      - relationships:
+          name: customer_in_customers
+          to: ref('stg_raw_staging__customers')
+          field: customer_id
+          column_name: customer_id
