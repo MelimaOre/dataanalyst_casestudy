@@ -18,7 +18,7 @@ Darstellung der täglichen Transaktionssummen in Euro, um die Performance pro Br
 ## Modelllogik
 - Join auf FX-Raten vom 01.03.2023  (Achtung: keine weiteren Daten vorhanden)
 - Umrechnung: `amount_euro = amount / fx_rate_to_euro`  
-- Aggregation: Summe und Count pro Tag, Kunde, Konto, Transaktionstyp und Währung
+- Aggregation: Summe und Count pro Tag, Kund:in, Konto, Transaktionstyp und Währung
 
 ## Datenqualität
 - Alle Spalten mit `not_null` getestet
