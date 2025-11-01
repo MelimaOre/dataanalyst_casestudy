@@ -25,3 +25,18 @@ Darstellung der täglichen Transaktionssummen in Euro, um die Performance pro Br
 - nur gültige Kunden und Konten erlaubt
 - nur FX-Raten aus der Mappingtabelle
 
+## Offene Punkte
+- Mein aktueller Code erstellt derzeit nur eine einmalige Tabelle. Im täglichen Betrieb wäre jedoch in der Regel eine inkrementelle Tabelle erforderlich.
+Abhängig davon, wann neue Daten bereitstehen, müsste dafür ein regelmäßiger Job eingerichtet werden (nutzt ihr dafür dbt Cloud?) und im Skript die WHERE-Klausel um eine Datumseinschränkung ergänzt werden.
+- Datenbereinigung: An welcher Stelle erfolgen bei euch die Bereinigungen?
+Es scheint möglich, dass in den Rohdaten der Transaktionen Fehler enthalten sind.
+Sauberer wäre es, diese bereits vor dem Reporting- oder Mart-Layer zu erkennen und zu korrigieren.
+- Die Währungsumrechnung hängt vom tagesaktuellen Wechselkurs ab.
+In meinem Skript müsste dafür noch ein Join über das Datumsfeld ergänzt werden, um die korrekten Tageskurse zu berücksichtigen.
+Speichert ihr Wechselkurse historisch, damit Berechnungen rückwirkend korrekt bleiben?
+- Die Spalte transaction_date ist derzeit nur ein einfaches Datumsfeld.
+Für saubere Zeitreihenanalysen wäre eine separate Datumstabelle (Date-Dimension) sinnvoll, auf die gejoint werden kann.
+- Ich habe im Datensatz die Spalte age erhalten.
+Wie nutzt ihr diese Dimension, und wie geht ihr damit um, dass sich das Alter jedes Jahr ändert?
+Gibt es stattdessen auch eine Spalte mit dem Geburtsdatum, auf deren Basis das Alter dynamisch berechnet werden kann?
+
